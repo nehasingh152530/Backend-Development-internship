@@ -2,11 +2,11 @@ const dotenv = require('dotenv');
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
-const connectDB = require('./config/db');
-const getLogger = require('./utils/logger');
-const errorHandler = require('./middleware/errorHandlers');
-const authRoutes = require('./routes/authRoutes');
-const taskRoutes = require('./routes/taskRoutes');
+const connectDB = require('../config/db');
+const getLogger = require('../utils/logger');
+const errorHandler = require('../middleware/errorHandlers');
+const authRoutes = require('../routes/authRoutes');
+const taskRoutes = require('../routes/taskRoutes');
 
 // Load env vars
 dotenv.config();
@@ -15,7 +15,6 @@ dotenv.config();
 connectDB().catch(err => console.error('Initial DB Connection Error:', err.message));
 
 const app = express();
-
 
 // Body parser
 app.use(express.json());
