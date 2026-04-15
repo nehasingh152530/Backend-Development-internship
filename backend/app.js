@@ -12,7 +12,7 @@ const taskRoutes = require('./routes/taskRoutes');
 dotenv.config();
 
 // Connect to database
-connectDB();
+connectDB().catch(err => console.error('Initial DB Connection Error:', err.message));
 
 const app = express();
 
@@ -30,6 +30,7 @@ app.use(cors());
 app.use(getLogger());
 
 // Mount routers
+app.get('/', (req, res) => res.send('Task Management API is running...'));
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/tasks', taskRoutes);
 
