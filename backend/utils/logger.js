@@ -1,20 +1,11 @@
-const fs = require('fs');
-const path = require('path');
 const morgan = require('morgan');
 
-// Basic file logger using morgan
+// Morgan logger configuration
 const getLogger = () => {
-  // Ensure logs directory exists
-  const logDir = path.join(__dirname, '../logs');
-  if (!fs.existsSync(logDir)) {
-    fs.mkdirSync(logDir);
-  }
-
-  // Create a write stream (in append mode)
-  const accessLogStream = fs.createWriteStream(path.join(logDir, 'access.log'), { flags: 'a' });
-  
-  // Return morgan middleware
-  return morgan('combined', { stream: accessLogStream });
+  // In serverless environments (like Vercel), we log to the console.
+  // Vercel captures stdout and makes it available in the dashboard logs.
+  return morgan('dev');
 };
 
 module.exports = getLogger;
+
