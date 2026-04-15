@@ -30,6 +30,20 @@ app.use(getLogger());
 
 // Mount routers
 app.get('/', (req, res) => res.send('Task Management API is running...'));
+
+// Diagnostic route
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    database: require('mongoose').connection.readyState === 1 ? 'connected' : 'disconnected',
+    env: {
+      hasMongoUri: !!process.env.MONGO_URI,
+      hasJwtSecret: !!process.env.JWT_SECRET,
+      nodeEnv: process.env.NODE_ENV
+    }
+  });
+});
+
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/tasks', taskRoutes);
 
